@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        
+        .video-controls {
+            border: 1px solid black;
+            padding: 20px;
+        }
+        
+        .video-control-play:before {
+            content: 'PLAY';
+            margin-right: 10px;
+        }
+        
+        .video-control-play.active:before {
+            content: 'PAUSE';
+            margin-right: 10px;
+        }
+        
+        .video-control-skip:before {
+            content: 'SKIP';
+            margin-right: 10px;
+        }
+        
+        .video-control-mute:before {
+            content: 'MUTE';
+            margin-right: 10px;
+        }
+        
+        .video-control-mute.active:before {
+            content: 'UNMUTE';
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div id="video" data-src="media/mov_bbb.{mp4,ogg}"></div>
+    
+    <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="../videocontrolls.js"></script>
+    <script>
+    
+        $(function() {
+            
+            $('#video').videoControls({
+                autoPlay: true,
+                clearContainer: false,
+                controls: {
+                    skip: true,
+                    play: true,
+                    mute: true
+                },
+                videoConfig: {
+                    width: 100,
+                    height: 200
+                }
+            })
+            .onEnd(function() { alert('ENDED'); })
+            .onSkip(function() { alert('SKIPPED'); })
+            .onPlay(function() { alert('PLAY'); })
+            .onPause(function() { alert('PAUSE'); })
+            .onMute(function() { alert('MUTE'); })
+            .onUnmute(function() { alert('UNMUTE'); })
+            .onTimeupdate(function(percent) { console.log('Video progress: ' + percent); });
+            ;
+            
+        });
+        
+    </script>
+</body>
+</html>

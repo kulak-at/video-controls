@@ -11,6 +11,7 @@ $.fn.videoControls = function(config) {
     var on_unmute_callbacks = [];
     var on_skip_callbacks = [];
     var on_progress_callbacks = [];
+    var on_timeupdate_callbacks = [];
     
     var callB = function(ar) {
         for(var i in ar)
@@ -96,8 +97,13 @@ $.fn.videoControls = function(config) {
     });
     
     video.on('timeupdate', function(e) {
+        for(var i in on_timeupdate_callbacks)
+            on_timeupdate_callbacks[i]( this.currentTime / this.duration );
+    });
+    
+    video.on('progress', function(e) {
         for(var i in on_progress_callbacks)
-            on_progress_callbacks[i]( this.currentTime / this.duration );
+            on_progress_callbacks[i]( this.buffered.end(0) / this.duration );
     });
     
     
@@ -162,7 +168,12 @@ $.fn.videoControls = function(config) {
             return this;
         },
         onTimeupdate: function(callback) {
+            on_timeupdate_callbacks.push(callback);
+            return this;
+        },
+        onProgress: function(callback) {
             on_progress_callbacks.push(callback);
+            return this;
         },
         isPlaying: function() {
             return isPlaying;

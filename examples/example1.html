@@ -63,7 +63,8 @@
             .onPause(function() { alert('PAUSE'); })
             .onMute(function() { alert('MUTE'); })
             .onUnmute(function() { alert('UNMUTE'); })
-            .onTimeupdate(function(percent) { console.log('Video progress: ' + percent); });
+            .onTimeupdate(function(percent) { console.log('Video progress: ' + percent); })
+            .onProgress(function(percent) { console.log('Video downloading: ' + percent); })
             ;
             
         });
